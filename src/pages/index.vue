@@ -99,6 +99,9 @@ function expendZero(block: BlockState) {
     }
   })
 }
+function onRightClick(block: BlockState) {
+  block.flagged = true
+}
 </script>
 
 <template>
@@ -119,8 +122,12 @@ function expendZero(block: BlockState) {
         hover="bg-gray/10"
         :class="getBlockClass(item)"
         @click="onClick(item)"
+        @contextmenu.prevent="onRightClick(item)"
       >
-        <template v-if="item.revealed || dev">
+        <template v-if="item.flagged">
+          <div i-mdi-flag text-red />
+        </template>
+        <template v-else-if="item.revealed || dev">
           <div v-if="item.mine" i-mdi:mine>
             x
           </div>
