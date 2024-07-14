@@ -45,6 +45,9 @@ importers:
       '@iconify-json/carbon':
         specifier: ^1.1.33
         version: 1.1.33
+      '@iconify-json/mdi':
+        specifier: ^1.1.67
+        version: 1.1.67
       '@intlify/unplugin-vue-i18n':
         specifier: ^4.0.0
         version: 4.0.0(rollup@4.17.2)(vue-i18n@9.13.1(vue@3.4.27(typescript@5.4.5)))
@@ -1050,6 +1053,9 @@ packages:
 
   '@iconify-json/carbon@1.1.33':
     resolution: {integrity: sha512-TsjyOqhqMhIEdUnteGPMoKvbY1SIsM8A4sASHIg+YiKoDGWqlwD/g4pLXoAoVj3NL3E1hRxoTIY1oqpndXIxvg==}
+
+  '@iconify-json/mdi@1.1.67':
+    resolution: {integrity: sha512-00nllHES8hyACwIfgySlQgAE6MKgpr2wsKfpifMiZWZ9aXC5l4Jb0lR3lJSWwXgOW6kzAOdzC3T+2VOfBBZ13A==}
 
   '@iconify/types@2.0.0':
     resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
@@ -2261,9 +2267,6 @@ packages:
   cookie@0.5.0:
     resolution: {integrity: sha512-YZ3GUyn/o8gfKJlnlX7g7xq4gyO6OSuhGPKaaGssGB2qgDUS0gPgtTvoyZLTt9Ab6dC4hfc9dV5arkvc/OCmrw==}
     engines: {node: '>= 0.6'}
-
-  core-js-compat@3.34.0:
-    resolution: {integrity: sha512-4ZIyeNbW/Cn1wkMMDy+mvrRUxrwFNjKwbhCfQpDd+eLgYipDqp8oGFGtLmhh18EDPKA0g3VUBYOxQGGwvWLVpA==}
 
   core-js-compat@3.37.1:
     resolution: {integrity: sha512-9TNiImhKvQqSUkOvk/mMRZzOANTiEVC7WaBNhHcKM7x+/5E1l5NvsysR19zuDQScE8k+kfQXWRN3AtS/eOSHpg==}
@@ -6007,7 +6010,7 @@ snapshots:
       babel-plugin-polyfill-corejs2: 0.3.3(@babel/core@7.24.5)
       babel-plugin-polyfill-corejs3: 0.6.0(@babel/core@7.24.5)
       babel-plugin-polyfill-regenerator: 0.4.1(@babel/core@7.24.5)
-      core-js-compat: 3.34.0
+      core-js-compat: 3.37.1
       semver: 6.3.1
     transitivePeerDependencies:
       - supports-color
@@ -6241,6 +6244,10 @@ snapshots:
   '@humanwhocodes/retry@0.3.0': {}
 
   '@iconify-json/carbon@1.1.33':
+    dependencies:
+      '@iconify/types': 2.0.0
+
+  '@iconify-json/mdi@1.1.67':
     dependencies:
       '@iconify/types': 2.0.0
 
@@ -7478,7 +7485,7 @@ snapshots:
     dependencies:
       '@babel/core': 7.24.5
       '@babel/helper-define-polyfill-provider': 0.3.3(@babel/core@7.24.5)
-      core-js-compat: 3.34.0
+      core-js-compat: 3.37.1
     transitivePeerDependencies:
       - supports-color
 
@@ -7761,10 +7768,6 @@ snapshots:
   cookie-signature@1.0.6: {}
 
   cookie@0.5.0: {}
-
-  core-js-compat@3.34.0:
-    dependencies:
-      browserslist: 4.22.2
 
   core-js-compat@3.37.1:
     dependencies:
