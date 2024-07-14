@@ -16,12 +16,6 @@ const state = reactive(Array.from({ length: height }, (_, y) => Array.from({ len
   revealed: false,
 }))))
 
-function generateMines() {
-  for (const row of state) {
-    for (const block of row)
-      block.mine = Math.random() < 0.3
-  }
-}
 const numberColors = [
   'text-transparent',
   'text-blue-500',
@@ -33,8 +27,16 @@ const numberColors = [
   'text-pink-500',
   'text-teal-500',
 ]
+let mineGenerated = false
+const dev = true
 function onClick(block: BlockState) {
+  if (!mineGenerated) {
+    generateMines(block)
+    mineGenerated = true
+  }
   block.revealed = true
+
+  expendZero(block)
 }
 function getBlockClass(block: BlockState) {
   if (!block.revealed)
@@ -53,23 +55,50 @@ const directions = [
 ]
 
 function updateNumber() {
-  state.forEach((raw, y) => {
-    raw.forEach((block, x) => {
+  state.forEach((raw) => {
+    raw.forEach((block) => {
       if (block.mine)
         return
-      directions.forEach(([dx, dy]) => {
-        const x2 = x + dx
-        const y2 = y + dy
-        if (x2 < 0 || x2 >= width || y2 < 0 || y2 >= height)
-          return
-        if (state[y2][x2].mine)
+      getSiblings(block).forEach((b) => {
+        if (b.mine)
           block.adjacentMines += 1
       })
     })
   })
 }
-generateMines()
-updateNumber()
+function getSiblings(block: BlockState) {
+  return directions.map(([dx, dy]) => {
+    const x2 = block.x + dx
+    const y2 = block.y + dy
+    if (x2 < 0 || x2 >= width || y2 < 0 || y2 >= height)
+      return undefined
+    return state[y2][x2]
+  }).filter(Boolean) as BlockState[]
+}
+
+function generateMines(initial: BlockState) {
+  for (const row of state) {
+    for (const block of row) {
+      if (Math.abs(initial.x - block.x) <= 1)
+        continue
+      if (Math.abs(initial.y - block.y) <= 1)
+        continue
+      block.mine = Math.random() < 0.3
+    }
+  }
+  updateNumber()
+}
+
+function expendZero(block: BlockState) {
+  if (block.adjacentMines)
+    return
+  getSiblings(block).forEach((s) => {
+    if (!s.revealed) {
+      s.revealed = true
+      expendZero(s)
+    }
+  })
+}
 </script>
 
 <template>
@@ -86,12 +115,12 @@ updateNumber()
         h-10 w-10 m="0.5"
         items-center
         justify-center
-        border="gray-300/50 1"
+        border="gray-300/50 2"
         hover="bg-gray/10"
         :class="getBlockClass(item)"
         @click="onClick(item)"
       >
-        <template v-if="item.revealed">
+        <template v-if="item.revealed || dev">
           <div v-if="item.mine" i-mdi:mine>
             x
           </div>
